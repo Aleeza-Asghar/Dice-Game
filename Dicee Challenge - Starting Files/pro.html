@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dice</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Indie+Flower|Lobster"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Refresh Me</h1>
+      <div class="sub-container"></div>
+    </div>
+  </body>
+
+  <footer>www 🎲 App Brewery 🎲 com</footer>
+
+  <script>
+    const numOfPlayers = prompt("How many players?"),
+    players = [],
+    playersMapping = {},
+    randomNumberGenerator = (n) => Math.floor(Math.random() * n + 1),
+    titlePath = (title) => (document.querySelector("h1").textContent = title);
+    
+    console.time('1');
+
+    for (let i = 1; i <= numOfPlayers; i++) {
+      let dice = randomNumberGenerator(6);
+      players.push(
+        `<div class="dice">
+          <p>Player ${i}</p>
+          <img class="img${i}" src="./images/dice${dice}.png">
+        </div>`
+      );
+
+      if(playersMapping[dice]){
+        playersMapping[dice].push(i);
+      }else{
+        playersMapping[dice] = [i];
+      }
+    }
+
+    const winningPlayers = playersMapping[Math.max(...Object.keys(playersMapping))];
+
+    document.querySelector(".sub-container").innerHTML = players;
+
+    if (winningPlayers.length === 1) {
+      titlePath('Player ' + winningPlayers[0] + " Won!");
+    } else if (winningPlayers.length === 2) {
+      titlePath("Its a draw between " + 'Player ' + winningPlayers[0] + " and " + 'Player ' + winningPlayers[1]);
+    } else {
+      titlePath(
+        "Its a draw between " + 'Players ' + 
+          winningPlayers.slice(0, winningPlayers.length - 1).join(", ") +
+          " and " +
+          winningPlayers.slice(-1) +
+          "."
+      );
+    }
+
+    console.timeEnd('1');
+  </script>
+</html>

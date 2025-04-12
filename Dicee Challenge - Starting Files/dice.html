@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Dice</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Lobster" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container">
+      <h1>Refresh Me</h1>
+      <div class="sub-container"> 
+      </div>
+    </div>
+
+
+  </body>
+
+  <footer>
+    www 🎲 App Brewery 🎲 com
+  </footer>
+
+  <script>
+    // multiplayer dice game 
+    const numOfPlayers = prompt("How many players?"),
+    players = [], 
+    winners = [], 
+    lastArrayItem = winners.length - 1, 
+    randomNumberGenerator = (n) => Math.floor((Math.random() * (n)) + 1),
+    diceImgPicker = (path, num) => path.setAttribute("src", "images/dice" + num + ".png"),
+    titlePath = (title) => document.querySelector("h1").textContent = (title);
+    console.time('1');
+    
+    for (let i = 1; i <= numOfPlayers; i++){
+      players.push(
+        `<div class="dice">
+          <p>Player ${i}</p>
+          <img class="img${i}" src="./images/dice1.png">
+        </div>`
+      );
+    }
+    document.querySelector(".sub-container").innerHTML = players;
+
+    for (let i = 1; i <= players.length; i++){
+      let dice = randomNumberGenerator(6);
+      let indivitualPlayer = document.querySelector(`.img${i}`);
+      diceImgPicker(indivitualPlayer, dice);
+    }
+
+    for (let n = 6; winners.length < 1 && n >= 1; n--){
+      for (let i = 0; i < players.length; i++){ 
+        const currentEl = document.querySelectorAll(".dice img")[i];
+        if (currentEl.src.includes(`dice${n}`)){ 
+          winners.push(`Player ${i + 1}`);
+        } 
+      } 
+    } 
+
+    if (winners.length === 1){
+      titlePath(winners[0] + " Won!");
+    } else if ((winners.length === 2)){
+      titlePath("Its a draw between " + winners[0] + " and " + winners[1]);
+    } else {
+      titlePath("Its a draw between " + winners.slice(0, lastArrayItem).join(", ") + " and " + winners[winners.length - 1] + ".");
+    }
+    console.timeEnd('1');
+
+ 
+   
+
+
+
+
+
+
+  
+    // 2 player only dice game
+    // const randomNumberGenerator = (n) => Math.floor((Math.random() * (n)) + 1),
+    // diceImgPicker = (path, num) => path.setAttribute("src", "images/dice" + num + ".png");
+    // titlePath = (title) => document.querySelector("h1").textContent = (title);
+    
+    // let [dice1, dice2] = [randomNumberGenerator(6), randomNumberGenerator(6)],
+    // [playerOne, playerTwo]  = [document.querySelector(".img1"), document.querySelector(".img2")];
+
+    
+    // diceImgPicker(playerOne, dice1); //For Player 1
+    // diceImgPicker(playerTwo, dice2);  //For Player 2
+
+    // if (dice1 === dice2){
+    //   titlePath("Its A Draw");
+    // } else if (dice1 > dice2){
+    //   titlePath("Player 1 Won!");
+    // } else {
+    //   titlePath("Player 2 Won!");
+    // } 
+
+
+
+
+    
+    // First Attempt
+    // let dice1 = Math.floor((Math.random() * 6) + 1);
+    // let dice2 = Math.floor((Math.random() * 6) + 1);
+    // const playerOneDice = document.querySelector(".img1");
+    // const playerTwoDice = document.querySelector(".img2");
+
+    // if (dice1 === 2){
+    //   playerOneDice.setAttribute("src", "/images/dice2.png");
+    // } else if (dice1 === 3){
+    //   playerOneDice.setAttribute("src", "/images/dice3.png");
+    // } else if (dice1 === 4){
+    //   playerOneDice.setAttribute("src", "/images/dice4.png");
+    // } else if (dice1 === 5){
+    //   playerOneDice.setAttribute("src", "/images/dice5.png");
+    // } else if (dice1 === 6){
+    //   playerOneDice.setAttribute("src", "/images/dice6.png");
+    // } else {
+    //   playerOneDice.getAttribute("src");
+    // }
+
+
+    // if (dice2 === 2){
+    //   playerTwoDice.setAttribute("src", "/images/dice2.png");
+    // } else if (dice2 === 3){
+    //   playerTwoDice.setAttribute("src", "/images/dice3.png");
+    // } else if (dice2 === 4){
+    //   playerTwoDice.setAttribute("src", "/images/dice4.png");
+    // } else if (dice2 === 5){
+    //   playerTwoDice.setAttribute("src", "/images/dice5.png");
+    // } else if (dice2 === 6){
+    //   playerTwoDice.setAttribute("src", "/images/dice6.png");
+    // } else {
+    //   playerTwoDice.getAttribute("src");
+    // }
+
+    // if (dice1 === dice2){
+    //   document.querySelector("h1").textContent = "Its A Draw";
+    // } else if (dice1 > dice2){
+    //   document.querySelector("h1").textContent = "Player 1 Won!";
+    // } else {
+    //   document.querySelector("h1").textContent = "Player 2 Won!";
+    // } 
+  </script>
+</html>
